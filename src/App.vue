@@ -403,7 +403,7 @@
       width: 150px;
       min-height: 150px;
       font-size: 1rem;
-    }npm rn
+    }
     .date{
       font-size: .6rem;
     }
