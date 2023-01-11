@@ -1,11 +1,11 @@
 <script setup>
-  import {ref, watch, onMounted} from "vue";
+  import {ref, watch, onMounted, nextTick } from "vue";
 
   const showModal = ref(false)
   const newNote = ref("")
   const notes = ref([])
   const errorMsg = ref("")
-  const name = ref("")
+  const textarea = ref(null)
 
   // Get Random Color
   function getRandomColor() {
@@ -47,6 +47,14 @@
     
   }
 
+  // Open Modal on Btn Click
+  const openModal = () => {
+    showModal.value = true
+    nextTick(() => {
+        textarea.value.focus();
+    });
+  }
+
   const deleteCard = (id) => {
     notes.value = notes.value.filter( note => note.id !== id )
   }
@@ -69,7 +77,7 @@
     <!-- Modal -->
     <div v-show="showModal" class="overlay">
       <div class="modal">
-        <textarea @keypress.enter="addNote" v-model.trim="newNote" placeholder="What's on your mind?" name="note" cols="30" rows="5"></textarea>
+        <textarea @keypress.enter="addNote" v-model.trim="newNote" ref="textarea" placeholder="What's on your mind?" name="note" cols="30" rows="5"></textarea>
         
         <transition name="shake">
           <p v-if="errorMsg">{{ errorMsg }}</p>
@@ -84,9 +92,9 @@
     <div class="container">
 
       <!-- Header Section -->
-      <header  @dblclick="showModal=true">
+      <header  @dblclick="openModal">
         <h1>Pin iT</h1>
-        <button @click="showModal=true">+</button>
+        <button @click="openModal">+</button>
       </header>
 
       <!-- Cards Section -->
@@ -395,7 +403,7 @@
       width: 150px;
       min-height: 150px;
       font-size: 1rem;
-    }
+    }npm rn
     .date{
       font-size: .6rem;
     }
